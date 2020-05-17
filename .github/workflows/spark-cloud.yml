@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - spark-cloud
+    tags:
+      - 'v*' # Push events to matching v*, i.e. v1.0, v20.15.10
   pull_request:
     branches:
       - spark-cloud
@@ -39,6 +41,17 @@ jobs:
           key: ${{ matrix.scala }}-${{ matrix.hadoop }}-maven-org-${{ hashFiles('**/pom.xml') }}
           restore-keys: |
             ${{ matrix.scala }}-${{ matrix.hadoop }}-maven-org-
+      - name: Set up Python
+        run: |
+          sudo apt-get install python3-pip python3-wheel python3-setuptools -y
+          echo "::add-path::$HOME/.local/bin"
+          export PATH=$PATH:$HOME/.local/bin
+          pip3 install "moto[server]==1.3.14"
+          pip3 show moto
+          echo "$PATH"
+      - name: Set up Python
+        run: |
+          which moto_server
       - name: Set up JDK 8
         uses: actions/setup-java@v1
         with:
@@ -52,7 +65,15 @@ jobs:
           mkdir -p ~/.m2
           ./dev/make-distribution.sh --name ${{ matrix.hadoop }}-cloud --pip --tgz -P${{ matrix.hadoop }} -Phadoop-cloud -Pmesos -Pyarn -Pkubernetes "$MAVEN_CLI_OPTS"
           rm -rf ~/.m2/repository/org/apache/spark
-      - name: Create Release
+      - name: Set up Python
+        run: |
+          sudo apt-get install python3-pip python3-wheel python3-setuptools -y
+          echo "::add-path::$HOME/.local/bin"
+      - name: Test pyspark distribution
+        run: |
+          pip3 install "moto[server]==1.3.14" python/dist/pyspark-*.tar.gz
+          python3 python/test_dist/test_s3a.py
+      - name: Create release
         id: create_release
         uses: actions/create-release@v1
         env:
@@ -66,7 +87,7 @@ jobs:
         run: |
           export SPARK_VERSION=$(./build/mvn help:evaluate -Dexpression=project.version $@ 2>/dev/null | grep -v "INFO" | grep -v "WARNING" | tail -n 1)
           echo "::set-env name=SPARK_VERSION::$SPARK_VERSION"
-      - name: Upload Release Asset
+      - name: Upload pyspark release asset
         id: upload-release-asset
         uses: actions/upload-release-asset@v1
         env:
