@@ -62,13 +62,18 @@ jobs:
           release_name: Release ${{ github.ref }}
           draft: false
           prerelease: false
+      - name: Set Spark Version
+        run: |
+          export SPARK_VERSION=$(./build/mvn help:evaluate -Dexpression=project.version $@ 2>/dev/null | grep -v "INFO" | grep -v "WARNING" | tail -n 1)
+          echo "::set-env name=SPARK_VERSION::$SPARK_VERSION"
       - name: Upload Release Asset
         id: upload-release-asset
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PYSPARK_ARCHIVE: pyspark-${{ env.SPARK_VERSION }}.tar.gz
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: python/dist/pyspark-2.4.5.tar.gz
-          asset_name: pyspark-2.4.5.tar.gz
+          asset_path: python/dist/${{ env.PYSPARK_ARCHIVE }}
+          asset_name: ${{ env.PYSPARK_ARCHIVE }}
           asset_content_type: application/gzip
