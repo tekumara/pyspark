@@ -259,6 +259,20 @@
         <enabled>false</enabled>
       </snapshots>
     </repository>
+    <!--
+      Needed for spark-hadoop-cloud_2.11 only
+    -->
+    <repository>
+      <id>hortonworks</id>
+      <name>Hortonworks repo for spark-hadoop-cloud_2.11</name>
+      <url>https://repo.hortonworks.com/content/repositories/releases</url>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+    </repository>
   </repositories>
   <pluginRepositories>
     <pluginRepository>
