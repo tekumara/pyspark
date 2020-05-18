@@ -1,104 +1,39 @@
-# Apache Spark
+# Spark with S3A
 
-Spark is a fast and general cluster computing system for Big Data. It provides
-high-level APIs in Scala, Java, Python, and R, and an optimized engine that
-supports general computation graphs for data analysis. It also supports a
-rich set of higher-level tools including Spark SQL for SQL and DataFrames,
-MLlib for machine learning, GraphX for graph processing,
-and Spark Streaming for stream processing.
+This distribution of Spark bundles [hadoop-aws 3.1](https://hadoop.apache.org/docs/r3.1.0/hadoop-aws/tools/hadoop-aws/index.html) which contains optmised committers
+and the [HortonWorks backport](https://github.com/hortonworks-spark/cloud-integration/blob/master/spark-cloud-integration/src/main/site/markdown/index.md) so these committers can be used with Spark 2.4.x.
 
-<http://spark.apache.org/>
+## Rationale
 
+Common practice is to use hadoop-aws 2.7.3 as follows: 
 
-## Online Documentation
+```
+pyspark --packages "org.apache.hadoop:hadoop-aws:2.7.3" --driver-java-options "-Dspark.hadoop.fs.s3.impl=org.apache.hadoop.fs.s3a.S3AFileSystem"
+```
+However later versions of hadoop-aws cannot be used this way without errors. 
 
-You can find the latest Spark documentation, including a programming
-guide, on the [project web page](http://spark.apache.org/documentation.html).
-This README file only contains basic setup instructions.
+Later versions of hadoop-aws contain the following new features:
+* [2.8 release line](http://hadoop.apache.org/docs/r2.8.0/index.html) contains S3A improvements to 
+support any AWSCredentialsProvider
+* [2.9 release line](http://hadoop.apache.org/docs/r2.9.0/index.html) contains 
+[S3Guard](http://hadoop.apache.org/docs/r2.9.0/hadoop-aws/tools/hadoop-aws/s3guard.html) which provides 
+consistency and metadata caching for S3A via a backing DynamoDB metadata store.
+* [3.1 release line](http://hadoop.apache.org/docs/r3.1.0/index.html) incorporates HADOOP-13786 which 
+contains optimised job committers including the Netflix staging committers (Directory and Partitioned) 
+and the Magic committers. See 
+[committers](https://github.com/apache/hadoop/blob/branch-3.1/hadoop-tools/hadoop-aws/src/site/markdown/tools/hadoop-aws/committers.md) and [committer architecture](https://github.com/apache/hadoop/blob/trunk/hadoop-tools/hadoop-aws/src/site/markdown/tools/hadoop-aws/committer_architecture.md).
 
-## Building Spark
+To take advantage of the 3.1 release line committers in Spark you also need the binding classes introduced into
+Spark 3.0.0 by [SPARK-23977](https://issues.apache.org/jira/browse/SPARK-23977). For Spark 2.4, a backport is
+available from the [Hortonworks repo](https://mvnrepository.com/artifact/org.apache.spark/spark-hadoop-cloud_2.11/2.3.2.3.1.0.6-1).
 
-Spark is built using [Apache Maven](http://maven.apache.org/).
-To build Spark and its example programs, run:
+This distribution [builds a Spark 2.4.x distribution](https://github.com/tekumara/spark/blob/dee3073ab93afa8b5807c09f852a415d7ec7bb4c/.github/workflows/spark-cloud.yml#L60) from source 
+with Hadoop 3.1 and the additional [Hortonworks backport dependency](https://github.com/tekumara/spark/blob/dee3073ab93afa8b5807c09f852a415d7ec7bb4c/hadoop-cloud/pom.xml#L248).
 
-    build/mvn -DskipTests clean package
+## Install
 
-(You do not need to do this if you downloaded a pre-built package.)
+```
+pip install https://github.com/tekumara/spark/releases/download/v.2.4.5-cloud/pyspark-2.4.5.tar.gz
+```
 
-More detailed documentation is available from the project site, at
-["Building Spark"](http://spark.apache.org/docs/latest/building-spark.html).
-
-For general development tips, including info on developing Spark using an IDE, see ["Useful Developer Tools"](http://spark.apache.org/developer-tools.html).
-
-## Interactive Scala Shell
-
-The easiest way to start using Spark is through the Scala shell:
-
-    ./bin/spark-shell
-
-Try the following command, which should return 1000:
-
-    scala> sc.parallelize(1 to 1000).count()
-
-## Interactive Python Shell
-
-Alternatively, if you prefer Python, you can use the Python shell:
-
-    ./bin/pyspark
-
-And run the following command, which should also return 1000:
-
-    >>> sc.parallelize(range(1000)).count()
-
-## Example Programs
-
-Spark also comes with several sample programs in the `examples` directory.
-To run one of them, use `./bin/run-example <class> [params]`. For example:
-
-    ./bin/run-example SparkPi
-
-will run the Pi example locally.
-
-You can set the MASTER environment variable when running examples to submit
-examples to a cluster. This can be a mesos:// or spark:// URL,
-"yarn" to run on YARN, and "local" to run
-locally with one thread, or "local[N]" to run locally with N threads. You
-can also use an abbreviated class name if the class is in the `examples`
-package. For instance:
-
-    MASTER=spark://host:7077 ./bin/run-example SparkPi
-
-Many of the example programs print usage help if no params are given.
-
-## Running Tests
-
-Testing first requires [building Spark](#building-spark). Once Spark is built, tests
-can be run using:
-
-    ./dev/run-tests
-
-Please see the guidance on how to
-[run tests for a module, or individual tests](http://spark.apache.org/developer-tools.html#individual-tests).
-
-There is also a Kubernetes integration test, see resource-managers/kubernetes/integration-tests/README.md
-
-## A Note About Hadoop Versions
-
-Spark uses the Hadoop core library to talk to HDFS and other Hadoop-supported
-storage systems. Because the protocols have changed in different versions of
-Hadoop, you must build Spark against the same version that your cluster runs.
-
-Please refer to the build documentation at
-["Specifying the Hadoop Version and Enabling YARN"](http://spark.apache.org/docs/latest/building-spark.html#specifying-the-hadoop-version-and-enabling-yarn)
-for detailed guidance on building for a particular distribution of Hadoop, including
-building for particular Hive and Hive Thriftserver distributions.
-
-## Configuration
-
-Please refer to the [Configuration Guide](http://spark.apache.org/docs/latest/configuration.html)
-in the online documentation for an overview on how to configure Spark.
-
-## Contributing
-
-Please review the [Contribution to Spark guide](http://spark.apache.org/contributing.html)
-for information on how to get started contributing to the project.
+To enable the staging committers see [test_s3a.py](https://github.com/tekumara/spark/blob/spark-cloud/python/test_dist/test_s3a.py#L43)
