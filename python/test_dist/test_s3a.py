@@ -47,7 +47,7 @@ try:
         .set("spark.sql.parquet.output.committer.class",
              "org.apache.spark.internal.io.cloud.BindingParquetOutputCommitter") \
         .set("spark.hadoop.fs.s3a.committer.name", "directory") \
-        .set("spark.hadoop.fs.s3a.committer.tmp.path", "file:///tmp/spark.staging")
+        .set("spark.hadoop.fs.s3a.committer.staging.tmp.path", "file:///tmp/spark-staging")
 
     spark = SparkSession.builder.config(conf=conf).getOrCreate()
 
@@ -56,13 +56,11 @@ try:
     columns = ["key", "value"]
     df1 = spark.createDataFrame(values, columns)
 
-    df1.show()
-
-    # write the dataframe as csv to s3
     df1.write.parquet("s3://test-bucket/data/")
 
-    # read the dataset from s3
     df2 = spark.read.parquet("s3://test-bucket/data/")
+
+    df2.show()
 
     print("Check dataframes are equal")
     df_tests.assertDataFrameEqual(df1, df2)
