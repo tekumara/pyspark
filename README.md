@@ -9,7 +9,7 @@ and the [HortonWorks backport](https://github.com/hortonworks-spark/cloud-integr
 pip install https://github.com/tekumara/spark/releases/download/v.2.4.5-cloud/pyspark-2.4.5.tar.gz
 ```
 
-See [test_s3a.py](https://github.com/tekumara/spark/blob/dee3073ab93afa8b5807c09f852a415d7ec7bb4c/python/test_dist/test_s3a.py#L43) for an example of using the staging committers
+See [test_s3a.py](https://github.com/tekumara/spark/blob/007fb44900/python/test_dist/test_s3a.py#L43) for an example of using the staging committers
 
 ## Rationale
 
@@ -35,5 +35,5 @@ To take advantage of the 3.1 release line committers in Spark you also need the 
 Spark 3.0.0 by [SPARK-23977](https://issues.apache.org/jira/browse/SPARK-23977). For Spark 2.4, a backport is
 available from the [Hortonworks repo](https://mvnrepository.com/artifact/org.apache.spark/spark-hadoop-cloud_2.11/2.3.2.3.1.0.6-1).
 
-This distribution [builds a Spark 2.4.x distribution](https://github.com/tekumara/spark/blob/dee3073ab93afa8b5807c09f852a415d7ec7bb4c/.github/workflows/spark-cloud.yml#L60) from source 
-with Hadoop 3.1 and the additional [Hortonworks backport dependency](https://github.com/tekumara/spark/blob/dee3073ab93afa8b5807c09f852a415d7ec7bb4c/hadoop-cloud/pom.xml#L248).
+This distribution [builds a Spark 2.4.x distribution](https://github.com/tekumara/spark/blob/007fb44900/.github/workflows/spark-cloud.yml#L59) from source 
+with Hadoop 3.1 and the additional [Hortonworks backport dependency](https://github.com/tekumara/spark/blob/007fb44900/hadoop-cloud/pom.xml#L248).
