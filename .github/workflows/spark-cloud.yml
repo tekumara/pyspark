@@ -85,6 +85,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: python/dist/${{ env.PYSPARK_ARCHIVE }}
+          asset_path: ${{ env.PYSPARK_ARCHIVE }}
           asset_name: ${{ env.PYSPARK_ARCHIVE }}
           asset_content_type: application/gzip
