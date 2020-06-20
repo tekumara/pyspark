@@ -58,12 +58,13 @@ jobs:
           mkdir -p ~/.m2
           ./dev/make-distribution.sh --name ${{ matrix.hadoop }}-cloud --pip --tgz -P${{ matrix.hadoop }} -Phadoop-cloud -Pmesos -Pyarn -Pkubernetes "$MAVEN_CLI_OPTS"
           rm -rf ~/.m2/repository/org/apache/spark
-
-          export PYSPARK_ARCHIVE=$(ls python/dist/pyspark-*.tar.gz)
-          echo "::set-env name=PYSPARK_ARCHIVE::$PYSPARK_ARCHIVE"
+      - name: Set release variables
+        run: |
+          echo "::set-env name=PYSPARK_ARCHIVE::$(basename python/dist/pyspark-*.tar.gz)"
+          echo "::set-env name=TAG_NAME::${GITHUB_REF#refs/tags/}"
       - name: Test pyspark distribution works with s3a
         run: |
-          pip3 install "moto[server]==1.3.14" "$PYSPARK_ARCHIVE"
+          pip3 install "moto[server]==1.3.14" "python/dist/$PYSPARK_ARCHIVE"
           export PYSPARK_PYTHON=/usr/bin/python3
           python3 python/test_dist/test_s3a.py
       - name: Create release
@@ -74,7 +75,12 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
+          release_name: ${{ github.ref }}
+          body: |
+            To install:
+            ```
+            pip install https://github.com/${{ github.repository }}/releases/download/${{ env.TAG_NAME }}/${{ env.PYSPARK_ARCHIVE }}
+            ```
           draft: false
           prerelease: false
       - name: Upload pyspark release asset
@@ -85,6 +91,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ${{ env.PYSPARK_ARCHIVE }}
+          asset_path: python/dist/${{ env.PYSPARK_ARCHIVE }}
           asset_name: ${{ env.PYSPARK_ARCHIVE }}
           asset_content_type: application/gzip
