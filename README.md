@@ -1,4 +1,4 @@
-# Tekumara build of Apache Spark with Hadoop Cloud
+# Tekumara build of Apache Spark with Hadoop 3.1
 
 A build of Apache Spark that uses the hadoop-cloud maven profile which, among other things, bundles [hadoop-aws 3.1](https://hadoop.apache.org/docs/r3.1.0/hadoop-aws/tools/hadoop-aws/index.html).
 
