@@ -153,20 +153,20 @@ try:
     long_description = "!!!!! missing pandoc do not upload to PyPI !!!!"
     try:
         import pypandoc
-        long_description = pypandoc.convert('README.md', 'rst')
+        long_description = pypandoc.convert('../README.md', 'rst')
     except ImportError:
         print("Could not import pypandoc - required to package PySpark", file=sys.stderr)
     except OSError:
         print("Could not convert - pandoc is not installed", file=sys.stderr)
 
     setup(
-        name='pyspark',
+        name='pyspark-cloud',
         version=VERSION,
-        description='Apache Spark Python API',
+        description='Tekumara build of Apache Spark with Hadoop 3.1',
         long_description=long_description,
-        author='Spark Developers',
-        author_email='dev@spark.apache.org',
-        url='https://github.com/apache/spark/tree/master/python',
+        author='tekumara',
+        author_email='tekumara.codes@gmail.com',
+        url='https://github.com/tekumara/spark',
         packages=['pyspark',
                   'pyspark.mllib',
                   'pyspark.mllib.linalg',
