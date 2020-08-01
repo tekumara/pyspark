@@ -1,7 +1,8 @@
-# Tekumara Distribution of Apache Spark with S3A
+# Tekumara build of Apache Spark with Hadoop Cloud
 
-This unofficial distribution of Apache Spark bundles [hadoop-aws 3.1](https://hadoop.apache.org/docs/r3.1.0/hadoop-aws/tools/hadoop-aws/index.html) which contains optimised committers
-and the [HortonWorks backport](https://github.com/hortonworks-spark/cloud-integration/blob/master/spark-cloud-integration/src/main/site/markdown/index.md) to use the committers with Spark 2.4.x.
+A build of Apache Spark that uses the hadoop-cloud maven profile which, among other things, bundles [hadoop-aws 3.1](https://hadoop.apache.org/docs/r3.1.0/hadoop-aws/tools/hadoop-aws/index.html).
+
+It also includes the [HortonWorks backport](https://github.com/hortonworks-spark/cloud-integration/blob/master/spark-cloud-integration/src/main/site/markdown/index.md) which enables Spark 2.4.x to use the new hadoop 3.1 committers.
 
 ## Install
 
