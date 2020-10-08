@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        scala: [ '2.11' ]
+        scala: [ '2.12' ]
         hadoop: [ 'hadoop-3.1' ]
     name: Build Spark Distribution with Scala ${{ matrix.scala }} / ${{ matrix.hadoop }}
 
