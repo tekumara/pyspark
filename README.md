@@ -1,6 +1,6 @@
-# Tekumara build of Apache Spark with Hadoop 3.1
+# Tekumara build of Apache PySpark with Hadoop 3.1
 
-A build of Apache Spark that uses the hadoop-cloud maven profile which, among other things, bundles [hadoop-aws 3.1](https://hadoop.apache.org/docs/r3.1.0/hadoop-aws/tools/hadoop-aws/index.html).
+A build of Apache PySpark that uses the hadoop-cloud maven profile which, among other things, bundles [hadoop-aws 3.1](https://hadoop.apache.org/docs/r3.1.0/hadoop-aws/tools/hadoop-aws/index.html).
 
 ## Install
 
@@ -20,7 +20,7 @@ pyspark --packages "org.apache.hadoop:hadoop-aws:2.7.3" --driver-java-options "-
 
 However later versions of hadoop-aws cannot be used this way without errors.
 
-This distribution [builds a Spark 2.4.x distribution](https://github.com/tekumara/spark/blob/spark-cloud/.github/workflows/spark-cloud.yml#L59) from source with Hadoop 3.1 and the additional [Hortonworks backport dependency](https://github.com/tekumara/spark/blob/spark-cloud/hadoop-cloud/pom.xml#L248).
+This project [builds a pyspark distribution](https://github.com/tekumara/spark/blob/spark-cloud/.github/workflows/spark-cloud.yml#L59) from source with Hadoop 3.1.
 
 Later versions of hadoop-aws contain the following new features:
 
