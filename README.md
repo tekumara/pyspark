@@ -7,10 +7,10 @@ It also includes the [HortonWorks backport](https://github.com/hortonworks-spark
 ## Install
 
 ```
-pip install https://github.com/tekumara/spark/releases/download/v2.4.5-cloud/pyspark-2.4.5.tar.gz
+pip install https://github.com/tekumara/spark/releases/download/v2.4.7-cloud/pyspark-2.4.7.tar.gz
 ```
 
-See [test_s3a.py](https://github.com/tekumara/spark/blob/70d0538034/python/test_dist/test_s3a.py#L43) for an example of using the staging committers
+See [test_s3a.py](https://github.com/tekumara/spark/blob/v2.4.7-cloud/python/test_dist/test_s3a.py#L43) for an example of using the staging committers
 
 ## Rationale
 
@@ -22,7 +22,7 @@ pyspark --packages "org.apache.hadoop:hadoop-aws:2.7.3" --driver-java-options "-
 
 However later versions of hadoop-aws cannot be used this way without errors.
 
-This distribution [builds a Spark 2.4.x distribution](https://github.com/tekumara/spark/blob/70d0538034/.github/workflows/spark-cloud.yml#L59) from source with Hadoop 3.1 and the additional [Hortonworks backport dependency](https://github.com/tekumara/spark/blob/70d0538034/hadoop-cloud/pom.xml#L248).
+This distribution [builds a Spark 2.4.x distribution](https://github.com/tekumara/spark/blob/v2.4.7-cloud/.github/workflows/spark-cloud.yml#L59) from source with Hadoop 3.1 and the additional [Hortonworks backport dependency](https://github.com/tekumara/spark/blob/v2.4.7-cloud/hadoop-cloud/pom.xml#L248).
 
 Later versions of hadoop-aws contain the following new features:
 
