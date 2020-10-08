@@ -17,7 +17,7 @@ jobs:
     strategy:
       matrix:
         scala: [ '2.12' ]
-        hadoop: [ 'hadoop-3.1' ]
+        hadoop: [ 'hadoop-3.2' ]
     name: Build Spark Distribution with Scala ${{ matrix.scala }} / ${{ matrix.hadoop }}
 
     steps:
