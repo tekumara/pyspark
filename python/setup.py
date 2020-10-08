@@ -154,18 +154,18 @@ try:
     # will search for SPARK_HOME with Python.
     scripts.append("pyspark/find_spark_home.py")
 
-    with open('README.md') as f:
+    with open('../README.md') as f:
         long_description = f.read()
 
     setup(
-        name='pyspark',
+        name='pyspark-cloud',
         version=VERSION,
-        description='Apache Spark Python API',
+        description='Tekumara build of Apache Spark with Hadoop 3.1',
         long_description=long_description,
         long_description_content_type="text/markdown",
-        author='Spark Developers',
-        author_email='dev@spark.apache.org',
-        url='https://github.com/apache/spark/tree/master/python',
+        author='tekumara',
+        author_email='tekumara.codes@gmail.com',
+        url='https://github.com/tekumara/spark',
         packages=['pyspark',
                   'pyspark.mllib',
                   'pyspark.mllib.linalg',
