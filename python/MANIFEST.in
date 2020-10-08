@@ -22,4 +22,4 @@ recursive-include deps/data *.data *.txt
 recursive-include deps/licenses *.txt
 recursive-include deps/examples *.py
 recursive-include lib *.zip
-include README.md
+include ../README.md
