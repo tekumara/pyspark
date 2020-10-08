@@ -245,6 +245,15 @@
             </exclusion>
           </exclusions>
         </dependency>
+        <!-- spark-hadoop-cloud_2.11 comes from the hortonworks repo and adds:
+            org.apache.spark.internal.io.cloud.PathOutputCommitProtocol
+            org.apache.spark.internal.io.cloud.BindingParquetOutputCommitter
+        -->
+        <dependency>
+          <groupId>org.apache.spark</groupId>
+          <artifactId>spark-hadoop-cloud_2.11</artifactId>
+          <version>2.3.2.3.1.0.6-1</version>
+        </dependency>
         <!--
         The jetty declarations are made
         (a) to keep that jetty-util-ajax version in sync with the rest of Spark.
