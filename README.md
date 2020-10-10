@@ -8,6 +8,18 @@ See [Releases](https://github.com/tekumara/spark/releases)
 
 ## Usage
  
+To use pyspark with temporary STS credentials:
+
+```
+pyspark --driver-java-options "-Dspark.hadoop.fs.s3a.aws.credentials.provider=org.apache.hadoop.fs.s3a.TemporaryAWSCredentialsProvider"
+```
+
+To modify an existing spark session to use S3A for S3 urls, for example `spark` in the pyspark shell:
+
+```
+spark.sparkContext._jsc.hadoopConfiguration().set("fs.s3.impl", "org.apache.hadoop.fs.s3a.S3AFileSystem")
+```
+
 See [test_s3a.py](https://github.com/tekumara/spark/blob/spark-cloud/python/test_dist/test_s3a.py#L43) for an example of using the staging committers.
 
 ## Rationale
