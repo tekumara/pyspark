@@ -1,6 +1,6 @@
 # Tekumara build of Apache PySpark with Hadoop 3.x
 
-A build of Apache PySpark that uses the hadoop-cloud maven profile which bundles [hadoop-aws 3.x](https://hadoop.apache.org/docs/r3.2.0/hadoop-aws/tools/hadoop-aws/index.html) and cloud support for S3A. 
+A build of Apache PySpark that uses the hadoop-cloud maven profile to bundle [hadoop-aws 3.x](https://hadoop.apache.org/docs/r3.2.0/hadoop-aws/tools/hadoop-aws/index.html) which contains S3A. 
 
 ## Install
 
@@ -12,7 +12,8 @@ See [test_s3a.py](https://github.com/tekumara/spark/blob/spark-cloud/python/test
 
 ## Rationale
 
-Common practice is to use hadoop-aws 2.7.3 as follows:
+The [pyspark distribution on pypi](https://pypi.org/project/pyspark/) ships with hadoop 2.7 and no cloud jars (ie: hadoop-aws).
+So common practice is to use hadoop-aws 2.7.3 as follows:
 
 ```
 pyspark --packages "org.apache.hadoop:hadoop-aws:2.7.3" --driver-java-options "-Dspark.hadoop.fs.s3.impl=org.apache.hadoop.fs.s3a.S3AFileSystem"

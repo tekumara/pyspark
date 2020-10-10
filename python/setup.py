@@ -154,7 +154,7 @@ try:
     # will search for SPARK_HOME with Python.
     scripts.append("pyspark/find_spark_home.py")
 
-    with open('../README.md') as f:
+    with open('README.md') as f:
         long_description = f.read()
 
     setup(
