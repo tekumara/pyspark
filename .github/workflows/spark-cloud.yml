@@ -79,7 +79,7 @@ jobs:
           body: |
             To install:
             ```
-            pip install 'pyspark-cloud @ https://github.com/${{ github.repository }}/releases/download/${{ env.TAG_NAME }}/${{ env.PYSPARK_ARCHIVE }}'
+            pip install 'pyspark @ https://github.com/${{ github.repository }}/releases/download/${{ env.TAG_NAME }}/${{ env.PYSPARK_ARCHIVE }}'
             ```
 
             Built with JDK 8, Scala ${{ matrix.scala }}, ${{ matrix.hadoop }}

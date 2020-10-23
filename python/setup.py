@@ -158,7 +158,7 @@ try:
         long_description = f.read()
 
     setup(
-        name='pyspark-cloud',
+        name='pyspark',
         version=VERSION,
         description='Tekumara build of Apache Spark with Hadoop 3.1',
         long_description=long_description,
