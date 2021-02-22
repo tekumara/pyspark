@@ -8,10 +8,10 @@ See [Releases](https://github.com/tekumara/spark/releases)
 
 ## Usage
  
-To use pyspark with temporary STS credentials:
+To use S3A for S3 URLs and temporary AWS STS credentials:
 
 ```
-pyspark --driver-java-options "-Dspark.hadoop.fs.s3a.aws.credentials.provider=org.apache.hadoop.fs.s3a.TemporaryAWSCredentialsProvider"
+pyspark --conf spark.hadoop.fs.s3.impl=org.apache.hadoop.fs.s3a.S3AFileSystem --conf spark.hadoop.fs.s3a.aws.credentials.provider=org.apache.hadoop.fs.s3a.TemporaryAWSCredentialsProvider
 ```
 
 To modify an existing spark session to use S3A for S3 urls, for example `spark` in the pyspark shell:
